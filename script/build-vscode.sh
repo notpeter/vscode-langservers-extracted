@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -e
+
+VSCODE_TAG="1.93.0"
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # prepare
@@ -8,7 +12,7 @@ mkdir -p $DIR/../dist
 
 # clone
 cd $DIR/../tmp
-git clone --depth=1 git@github.com:Microsoft/vscode vscode
+git clone git@github.com:Microsoft/vscode vscode --depth=1 --branch "$VSCODE_TAG"
 
 # pull
 cd $DIR/../tmp/vscode
@@ -36,7 +40,6 @@ mkdir -p ./dist/json-language-server
 cp -r ./tmp/vscode/extensions/json-language-features/server/out/* ./dist/json-language-server/
 npx babel ./dist/json-language-server --out-dir ./lib/json-language-server/
 
-mkdir -p ./dist/markdown-language-server
-cp -r ./tmp/vscode/extensions/markdown-language-features/server/out/* ./dist/markdown-language-server/
-npx babel ./dist/markdown-language-server --out-dir ./lib/markdown-language-server/
-
+#mkdir -p ./dist/markdown-language-server
+#cp -r ./tmp/vscode/extensions/markdown-language-features/out/* ./dist/markdown-language-server/
+#npx babel ./dist/markdown-language-server --out-dir ./lib/markdown-language-server/
